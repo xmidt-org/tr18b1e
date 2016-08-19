@@ -1,3 +1,9 @@
+// name regexp
+// value interface{}
+// interface type
+
+// support get, set, put, post
+
 package tr18b1e
 
 import (
