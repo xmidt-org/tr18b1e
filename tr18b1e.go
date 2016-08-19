@@ -1,23 +1,34 @@
 package tr18b1e
 
 import (
-	"encoding/xml"
+	// "os"
+	"fmt"
+	// "encoding/xml"
 )
 
-type Email struct {
-	Where string `xml:"where,attr"`
-	Addr  string
+type Library interface {
+	Get() error
+	Set() error
 }
 
-type Address struct {
-	City, State string
+type library struct {
+
 }
 
-type Result struct {
-	XMLName xml.Name `xml:"Person"`
-	Name    string   `xml:"FullName"`
-	Phone   string
-	Email   []Email
-	Groups  []string `xml:"Group>Value"`
-	Address
+func New() (Library, error) {
+	newLibrary := &library{}
+
+
+
+	return newLibrary, nil
+}
+
+func (l *library) Get() error {
+	fmt.Println("Stubbed out `Get` function")
+	return nil
+}
+
+func (l *library) Set() error {
+	fmt.Println("Stubbed out `Set` function")
+	return nil
 }
