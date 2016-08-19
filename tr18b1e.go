@@ -15,27 +15,34 @@ type trData struct {
 	value string
 }
 
-type trDatabase map[string]trData
-
 type Library interface {
-	Get(key string) error
+	Get(key string) (string, error)
 	Set(key string, data string) error
 }
 
 type library struct {
-	libraryData trDatabase
+	libraryData map[string]trData
 }
 
 func New() (Library, error) {
 	newLibrary := &library{}
 
+	newLibrary.libraryData = make(map[string]trData)
+
 	return newLibrary, nil
 }
 
-func (l *library) Get(key string) error {
-	fmt.Println("Stubbed out `Get` function")
-	fmt.Println("Soon we'll get", key)
-	return nil
+func (l *library) Get(key string) (string, error) {
+	if _, ok := l.libraryData[key]; ok {
+		return l.libraryData[key].name, nil
+	}
+
+	l.libraryData[key] = trData{
+		name:  key,
+		value: key,
+	}
+
+	return l.libraryData[key].value, nil
 }
 
 func (l *library) Set(key string, data string) error {
