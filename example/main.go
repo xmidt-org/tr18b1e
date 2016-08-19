@@ -6,6 +6,6 @@ import (
 
 func main() {
 	myLibrary, _ := tr18b1e.New()
-	myLibrary.Get()
-	myLibrary.Set()
+	myLibrary.Get("random")
+	myLibrary.Set("random", "stuff")
 }
