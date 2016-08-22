@@ -27,7 +27,7 @@ type TRData struct {
 
 type Library interface {
 	Get(key string) ([]*TRData, error)
-	Put(key string, data string) error
+	Put(key string, data interface{}) error
 	Update(key string, data string) error
 	Delete(key string) error
 }
@@ -72,10 +72,11 @@ func (l *library) Get(key string) ([]*TRData, error) {
 }
 
 // Create or replace `data` at the supplied `key`
-func (l *library) Put(key string, data string) error {
+func (l *library) Put(key string, data interface{}) error {
 	l.libraryData[key] = &TRData{
 		Name:  key,
 		Value: data,
+		ValueType: reflect.TypeOf(data),
 	}
 
 	return nil
