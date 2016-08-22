@@ -18,6 +18,7 @@ func main() {
 	fmt.Println(myData[0])
 
 	myLibrary.Delete("good.")
+	myLibrary.Update("hello", 42)
 	myData, _ = myLibrary.Get("hello")
 	fmt.Println(myData[0])
 }

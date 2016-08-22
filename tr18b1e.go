@@ -28,7 +28,7 @@ type TRData struct {
 type Library interface {
 	Get(key string) ([]*TRData, error)
 	Put(key string, data interface{}) error
-	Update(key string, data string) error
+	Update(key string, data interface{}) error
 	Delete(key string) error
 }
 
@@ -83,9 +83,10 @@ func (l *library) Put(key string, data interface{}) error {
 }
 
 // update the data located at `key` with the passed in `data`
-func (l *library) Update(key string, data string) error {
+func (l *library) Update(key string, data interface{}) error {
 	if _, ok := l.libraryData[key]; ok {
 		l.libraryData[key].Value = data
+		l.libraryData[key].ValueType = reflect.TypeOf(data)
 		return nil
 	}
 
