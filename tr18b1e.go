@@ -58,6 +58,10 @@ func (l *library) Get(key string) ([]*TRData, error) {
 			}
 		}
 
+		if len(trValues) == 0 {
+			return nil, errors.New("No instance of key in data.")
+		}
+
 		return trValues, nil
 	}
 

@@ -58,3 +58,25 @@ func TestGet(t *testing.T) {
 	assert.Equal("testing", myData[0].Value.(string))
 	assert.Equal("functions", myData[1].Value.(string))
 }
+
+func TestDelete(t *testing.T) {
+	assert := assert.New(t)
+	newLib, _ := New()
+
+	newLib.Put("hello", "world")
+
+	newLib.Put("hello.world", "testing")
+	newLib.Put("hello.planet", "functions")
+
+	// test deleting one entry with the wild card
+	err := newLib.Delete("hello")
+	myData, _ := newLib.Get("hello")
+	assert.Nil(err)
+	assert.Nil(myData)
+
+	// test deleting multiple entries with the wild card
+	err = newLib.Delete("hello.")
+	myData, _ = newLib.Get("hello.")
+	assert.Nil(err)
+	assert.Nil(myData)
+}
