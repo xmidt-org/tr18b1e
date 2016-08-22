@@ -3,6 +3,10 @@
 // varType type
 
 // support get, put, update, delete
+// only get and delete should work with the wild card
+// make get return the whole array (name, value, and value type)
+// create a "fake" version of this that utilizes calls to this to mimic
+// 	intended behavior
 
 package tr18b1e
 
