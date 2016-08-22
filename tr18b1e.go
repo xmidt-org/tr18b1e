@@ -20,8 +20,8 @@ import (
 )
 
 type TRData struct {
-	Name  string
-	Value interface{}
+	Name      string
+	Value     interface{}
 	ValueType reflect.Type
 }
 
@@ -74,8 +74,8 @@ func (l *library) Get(key string) ([]*TRData, error) {
 // Create or replace `data` at the supplied `key`
 func (l *library) Put(key string, data interface{}) error {
 	l.libraryData[key] = &TRData{
-		Name:  key,
-		Value: data,
+		Name:      key,
+		Value:     data,
 		ValueType: reflect.TypeOf(data),
 	}
 
