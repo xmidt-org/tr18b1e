@@ -39,7 +39,6 @@ func New() (Library, error) {
 	return newLibrary, nil
 }
 
-// TODO: match strings before adding them to the returned array
 // get all the data specified by `key`
 func (l *library) Get(key string) ([]string, error) {
 	trValues := make([]string, 0)
@@ -47,7 +46,11 @@ func (l *library) Get(key string) ([]string, error) {
 	// if we're dealing with a wildcard...
 	if (strings.LastIndex(key, ".") + 1) == len(key) {
 		for i := range l.libraryData {
-			trValues = append(trValues, l.libraryData[i].value)
+			if len(key) < len(l.libraryData[i].name) {
+				if key == l.libraryData[i].name[:len(key)] {
+					trValues = append(trValues, l.libraryData[i].value)
+				}
+			}
 		}
 
 		return trValues, nil
@@ -83,13 +86,16 @@ func (l *library) Update(key string, data string) error {
 	return errors.New("No instance of key in data.")
 }
 
-// TODO: match strings before deleting them from the map
 // deletes the data located at key
 func (l *library) Delete(key string) error {
 	// if we're dealing with a wildcard...
 	if (strings.LastIndex(key, ".") + 1) == len(key) {
 		for i := range l.libraryData {
-			delete(l.libraryData, l.libraryData[i].name)
+			if len(key) < len(l.libraryData[i].name) {
+				if key == l.libraryData[i].name[:len(key)] {
+					delete(l.libraryData, l.libraryData[i].name)
+				}
+			}
 		}
 
 		return nil

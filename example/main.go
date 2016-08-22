@@ -11,19 +11,20 @@ func main() {
 	myData, _ := myLibrary.Get("random")
 	fmt.Println(myData)
 
-	myLibrary.Put("hello", "stuff")
+	myLibrary.Put("hello", "hello")
 	myData, _ = myLibrary.Get("hello")
 	fmt.Println(myData)
 
-	myLibrary.Put("goodbye", "stuff")
-	myData, _ = myLibrary.Get(".")
+	myLibrary.Put("good.bye", "bye")
+	myLibrary.Put("good.buy", "buy")
+	myData, _ = myLibrary.Get("good.")
 	fmt.Println(myData)
 
 	myLibrary.Update("goodbye", "ffuts")
 	myData, _ = myLibrary.Get(".")
 	fmt.Println(myData)
 
-	myLibrary.Delete("hasas;ldfkjasd;f.")
-	myData, _ = myLibrary.Get(".")
+	myLibrary.Delete("adfasdfasdfasfsfas.")
+	myData, _ = myLibrary.Get("good.")
 	fmt.Println(myData)
 }
