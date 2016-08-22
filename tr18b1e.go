@@ -8,6 +8,9 @@
 // create a "fake" version of this that utilizes calls to this to mimic
 // 	intended behavior
 
+// TODO: could having the struct exported to the users provide some conditions
+// 			 that we don't want to happen?
+
 package tr18b1e
 
 import (
@@ -23,7 +26,7 @@ type TRData struct {
 }
 
 type Library interface {
-	Get(key string) ([]string, error)
+	Get(key string) ([]*TRData, error)
 	Put(key string, data string) error
 	Update(key string, data string) error
 	Delete(key string) error
@@ -42,15 +45,15 @@ func New() (Library, error) {
 }
 
 // get all the data specified by `key`
-func (l *library) Get(key string) ([]string, error) {
-	trValues := make([]string, 0)
+func (l *library) Get(key string) ([]*TRData, error) {
+	trValues := make([]*TRData, 0)
 
 	// if we're dealing with a wildcard...
 	if (strings.LastIndex(key, ".") + 1) == len(key) {
 		for i := range l.libraryData {
 			if len(key) < len(l.libraryData[i].Name) {
 				if key == l.libraryData[i].Name[:len(key)] {
-					trValues = append(trValues, l.libraryData[i].Value.(string))
+					trValues = append(trValues, l.libraryData[i])
 				}
 			}
 		}
@@ -60,7 +63,7 @@ func (l *library) Get(key string) ([]string, error) {
 
 	// if we're dealing with a single instance and it exists
 	if _, ok := l.libraryData[key]; ok {
-		trValues = append(trValues, l.libraryData[key].Value.(string))
+		trValues = append(trValues, l.libraryData[key])
 		return trValues, nil
 	}
 
