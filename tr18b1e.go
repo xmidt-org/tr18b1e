@@ -2,7 +2,7 @@
 // value interface{}
 // varType type
 
-// support get, set, put, post
+// support get, put, update, delete
 
 package tr18b1e
 
@@ -13,7 +13,9 @@ type trData struct {
 
 type Library interface {
 	Get(key string) (string, error)
-	Set(key string, data string) error
+	Put(key string, data string) error
+	Update(key string, data string) error
+	Delete(key string) error
 }
 
 type library struct {
@@ -41,7 +43,16 @@ func (l *library) Get(key string) (string, error) {
 	return l.libraryData[key].value, nil
 }
 
-func (l *library) Set(key string, data string) error {
+func (l *library) Put(key string, data string) error {
+	l.libraryData[key] = &trData{
+		name:  key,
+		value: data,
+	}
+
+	return nil
+}
+
+func (l *library) Update(key string, data string) error {
 	if _, ok := l.libraryData[key]; ok {
 		l.libraryData[key].value = data
 		return nil
@@ -51,6 +62,12 @@ func (l *library) Set(key string, data string) error {
 		name:  key,
 		value: data,
 	}
+
+	return nil
+}
+
+func (l *library) Delete(key string) error {
+	delete(l.libraryData, key)
 
 	return nil
 }

@@ -11,7 +11,7 @@ func main() {
 	myData, _ := myLibrary.Get("random")
 	fmt.Println(myData)
 
-	myLibrary.Set("random", "stuff")
+	myLibrary.Put("random", "stuff")
 
 	myData, _ = myLibrary.Get("random")
 
