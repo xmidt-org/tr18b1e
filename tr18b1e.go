@@ -11,7 +11,7 @@ import (
 )
 
 type trData struct {
-	name string
+	name  string
 	value string
 }
 
@@ -38,6 +38,8 @@ func (l *library) Get(key string) ([]string, error) {
 	trValues := make([]string, 0)
 
 	if (strings.LastIndex(key, ".") + 1) == len(key) {
+		// should we return anything here for the cucumber test to pass?
+
 		for i := range l.libraryData {
 			trValues = append(trValues, l.libraryData[i].value)
 		}
@@ -49,6 +51,9 @@ func (l *library) Get(key string) ([]string, error) {
 		trValues = append(trValues, l.libraryData[key].value)
 		return trValues, nil
 	}
+
+	// we need to confirm if the field does exist here in the future
+	// and then if it does then we create a mimic of it, as follows
 
 	l.libraryData[key] = &trData{
 		name:  key,
