@@ -6,13 +6,17 @@
 
 package tr18b1e
 
+import (
+	"strings"
+)
+
 type trData struct {
 	name string
 	value string
 }
 
 type Library interface {
-	Get(key string) (string, error)
+	Get(key string) ([]string, error)
 	Put(key string, data string) error
 	Update(key string, data string) error
 	Delete(key string) error
@@ -30,9 +34,20 @@ func New() (Library, error) {
 	return newLibrary, nil
 }
 
-func (l *library) Get(key string) (string, error) {
+func (l *library) Get(key string) ([]string, error) {
+	trValues := make([]string, 0)
+
+	if (strings.LastIndex(key, ".") + 1) == len(key) {
+		for i := range l.libraryData {
+			trValues = append(trValues, l.libraryData[i].value)
+		}
+
+		return trValues, nil
+	}
+
 	if _, ok := l.libraryData[key]; ok {
-		return l.libraryData[key].value, nil
+		trValues = append(trValues, l.libraryData[key].value)
+		return trValues, nil
 	}
 
 	l.libraryData[key] = &trData{
@@ -40,7 +55,9 @@ func (l *library) Get(key string) (string, error) {
 		value: key,
 	}
 
-	return l.libraryData[key].value, nil
+	trValues = append(trValues, l.libraryData[key].value)
+
+	return trValues, nil
 }
 
 func (l *library) Put(key string, data string) error {

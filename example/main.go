@@ -11,9 +11,10 @@ func main() {
 	myData, _ := myLibrary.Get("random")
 	fmt.Println(myData)
 
-	myLibrary.Put("random", "stuff")
+	myLibrary.Put("hello", "stuff")
+	myData, _ = myLibrary.Get("hello")
+	fmt.Println(myData)
 
-	myData, _ = myLibrary.Get("random")
-
+	myData, _ = myLibrary.Get("hasas;ldfkjasd;f.")
 	fmt.Println(myData)
 }
