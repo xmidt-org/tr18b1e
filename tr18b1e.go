@@ -12,6 +12,7 @@ package tr18b1e
 
 import (
 	"strings"
+	"errors"
 )
 
 type trData struct {
@@ -38,12 +39,13 @@ func New() (Library, error) {
 	return newLibrary, nil
 }
 
+// TODO: match strings before adding them to the returned array
+// get all the data specified by `key`
 func (l *library) Get(key string) ([]string, error) {
 	trValues := make([]string, 0)
 
+	// if we're dealing with a wildcard...
 	if (strings.LastIndex(key, ".") + 1) == len(key) {
-		// should we return anything here for the cucumber test to pass?
-
 		for i := range l.libraryData {
 			trValues = append(trValues, l.libraryData[i].value)
 		}
@@ -51,24 +53,17 @@ func (l *library) Get(key string) ([]string, error) {
 		return trValues, nil
 	}
 
+	// if we're dealing with a single instance and it exists
 	if _, ok := l.libraryData[key]; ok {
 		trValues = append(trValues, l.libraryData[key].value)
 		return trValues, nil
 	}
 
-	// we need to confirm if the field does exist here in the future
-	// and then if it does then we create a mimic of it, as follows
-
-	l.libraryData[key] = &trData{
-		name:  key,
-		value: key,
-	}
-
-	trValues = append(trValues, l.libraryData[key].value)
-
-	return trValues, nil
+	// if the key supplied does not actually represent a field that exists
+	return nil, errors.New("No instance of key in data.")
 }
 
+// Create or replace `data` at the supplied `key`
 func (l *library) Put(key string, data string) error {
 	l.libraryData[key] = &trData{
 		name:  key,
@@ -78,21 +73,28 @@ func (l *library) Put(key string, data string) error {
 	return nil
 }
 
+// update the data located at `key` with the passed in `data`
 func (l *library) Update(key string, data string) error {
 	if _, ok := l.libraryData[key]; ok {
 		l.libraryData[key].value = data
 		return nil
 	}
 
-	l.libraryData[key] = &trData{
-		name:  key,
-		value: data,
-	}
-
-	return nil
+	return errors.New("No instance of key in data.")
 }
 
+// TODO: match strings before deleting them from the map
+// deletes the data located at key
 func (l *library) Delete(key string) error {
+	// if we're dealing with a wildcard...
+	if (strings.LastIndex(key, ".") + 1) == len(key) {
+		for i := range l.libraryData {
+			delete(l.libraryData, l.libraryData[i].name)
+		}
+
+		return nil
+	}
+
 	delete(l.libraryData, key)
 
 	return nil

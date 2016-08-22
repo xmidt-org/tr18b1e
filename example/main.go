@@ -15,6 +15,15 @@ func main() {
 	myData, _ = myLibrary.Get("hello")
 	fmt.Println(myData)
 
-	myData, _ = myLibrary.Get("hasas;ldfkjasd;f.")
+	myLibrary.Put("goodbye", "stuff")
+	myData, _ = myLibrary.Get(".")
+	fmt.Println(myData)
+
+	myLibrary.Update("goodbye", "ffuts")
+	myData, _ = myLibrary.Get(".")
+	fmt.Println(myData)
+
+	myLibrary.Delete("hasas;ldfkjasd;f.")
+	myData, _ = myLibrary.Get(".")
 	fmt.Println(myData)
 }
