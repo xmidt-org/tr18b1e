@@ -1,23 +1,25 @@
-// name regexp
-// value interface{}
-// varType type
+// Name string
+// Value interface{}
+// ValueType type
 
 // support get, put, update, delete
 // only get and delete should work with the wild card
-// make get return the whole array (name, value, and value type)
+// make get return the whole array (Name, Value, and ValueType)
 // create a "fake" version of this that utilizes calls to this to mimic
 // 	intended behavior
 
 package tr18b1e
 
 import (
-	"strings"
 	"errors"
+	"reflect"
+	"strings"
 )
 
-type trData struct {
-	name  string
-	value string
+type TRData struct {
+	Name  string
+	Value interface{}
+	ValueType reflect.Type
 }
 
 type Library interface {
@@ -28,13 +30,13 @@ type Library interface {
 }
 
 type library struct {
-	libraryData map[string]*trData
+	libraryData map[string]*TRData
 }
 
 func New() (Library, error) {
 	newLibrary := &library{}
 
-	newLibrary.libraryData = make(map[string]*trData)
+	newLibrary.libraryData = make(map[string]*TRData)
 
 	return newLibrary, nil
 }
@@ -46,9 +48,9 @@ func (l *library) Get(key string) ([]string, error) {
 	// if we're dealing with a wildcard...
 	if (strings.LastIndex(key, ".") + 1) == len(key) {
 		for i := range l.libraryData {
-			if len(key) < len(l.libraryData[i].name) {
-				if key == l.libraryData[i].name[:len(key)] {
-					trValues = append(trValues, l.libraryData[i].value)
+			if len(key) < len(l.libraryData[i].Name) {
+				if key == l.libraryData[i].Name[:len(key)] {
+					trValues = append(trValues, l.libraryData[i].Value.(string))
 				}
 			}
 		}
@@ -58,7 +60,7 @@ func (l *library) Get(key string) ([]string, error) {
 
 	// if we're dealing with a single instance and it exists
 	if _, ok := l.libraryData[key]; ok {
-		trValues = append(trValues, l.libraryData[key].value)
+		trValues = append(trValues, l.libraryData[key].Value.(string))
 		return trValues, nil
 	}
 
@@ -68,9 +70,9 @@ func (l *library) Get(key string) ([]string, error) {
 
 // Create or replace `data` at the supplied `key`
 func (l *library) Put(key string, data string) error {
-	l.libraryData[key] = &trData{
-		name:  key,
-		value: data,
+	l.libraryData[key] = &TRData{
+		Name:  key,
+		Value: data,
 	}
 
 	return nil
@@ -79,7 +81,7 @@ func (l *library) Put(key string, data string) error {
 // update the data located at `key` with the passed in `data`
 func (l *library) Update(key string, data string) error {
 	if _, ok := l.libraryData[key]; ok {
-		l.libraryData[key].value = data
+		l.libraryData[key].Value = data
 		return nil
 	}
 
@@ -91,9 +93,9 @@ func (l *library) Delete(key string) error {
 	// if we're dealing with a wildcard...
 	if (strings.LastIndex(key, ".") + 1) == len(key) {
 		for i := range l.libraryData {
-			if len(key) < len(l.libraryData[i].name) {
-				if key == l.libraryData[i].name[:len(key)] {
-					delete(l.libraryData, l.libraryData[i].name)
+			if len(key) < len(l.libraryData[i].Name) {
+				if key == l.libraryData[i].Name[:len(key)] {
+					delete(l.libraryData, l.libraryData[i].Name)
 				}
 			}
 		}

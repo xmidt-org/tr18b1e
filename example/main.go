@@ -24,7 +24,10 @@ func main() {
 	myData, _ = myLibrary.Get(".")
 	fmt.Println(myData)
 
-	myLibrary.Delete("adfasdfasdfasfsfas.")
+	myLibrary.Delete("good.")
 	myData, _ = myLibrary.Get("good.")
+	fmt.Println(myData)
+
+	myData, _ = myLibrary.Get("hello")
 	fmt.Println(myData)
 }
