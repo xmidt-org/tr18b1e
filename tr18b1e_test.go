@@ -19,20 +19,42 @@ func TestNew(t *testing.T) {
 	assert.Nil(err)
 }
 
+func TestPut(t *testing.T) {
+	assert := assert.New(t)
+	newLib, _ := New()
+
+	err := newLib.Put("hello", "world")
+
+	assert.Nil(err)
+}
+
+func TestUpdate(t *testing.T) {
+	assert := assert.New(t)
+	newLib, _ := New()
+
+	newLib.Put("hello", "world")
+	err := newLib.Update("hello", 42)
+
+	assert.Nil(err)
+}
+
 func TestGet(t *testing.T) {
 	assert := assert.New(t)
 	newLib, _ := New()
 
-	// test to see if the function works when making up the value
-	_, err := newLib.Get("Device")
-	assert.Nil(err)
+	newLib.Put("hello", "world")
 
-	// test to see if it works when the value already exists
-	_, err = newLib.Get("Device")
-	assert.Nil(err)
+	newLib.Put("hello.world", "testing")
+	newLib.Put("hello.planet", "functions")
 
-	// test to see if it works when we have two values
-	_, err = newLib.Get("ID")
-	_, err = newLib.Get(".")
+	// test getting just one entry
+	myData, err := newLib.Get("hello")
 	assert.Nil(err)
+	assert.Equal("world", myData[0].Value.(string))
+
+	// test getting entries with the wild card
+	myData, err = newLib.Get("hello.")
+	assert.Nil(err)
+	assert.Equal("testing", myData[0].Value.(string))
+	assert.Equal("functions", myData[1].Value.(string))
 }
