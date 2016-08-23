@@ -13,13 +13,25 @@ func main() {
 	myData, _ := myLibrary.Get("hello")
 	fmt.Println(myData[0])
 
+	// can remove if a number
+	myLibrary.Put("1.bye", "bye")
+	myLibrary.Put("1.buy", "buy")
+	myData, _ = myLibrary.Get("1.")
+	fmt.Println("added", myData[0])
+	myLibrary.Delete("1.")
+	myData, _ = myLibrary.Get("1.")
+	fmt.Println("could remove", len(myData))
+
+	// cannot remove if not a number
 	myLibrary.Put("good.bye", "bye")
 	myLibrary.Put("good.buy", "buy")
 	myData, _ = myLibrary.Get("good.")
-	fmt.Println(myData[0])
+	fmt.Println("added", myData[0])
+	myLibrary.Delete("good.")
+	myData, _ = myLibrary.Get("good.")
+	fmt.Println("couldn't remove", len(myData))
 
 	// testing for deep copy
-	myLibrary.Delete("good.")
 	myLibrary.Update("hello", 42)
 	myData, _ = myLibrary.Get("hello")
 	fmt.Println("here", myData[0])

@@ -9,13 +9,13 @@
 // 	intended behavior
 
 // TODO: make a populate function
-// TODO: in `Delete` the character before . needs to be number
 
 package tr18b1e
 
 import (
 	"errors"
 	"reflect"
+	"strconv"
 	"strings"
 )
 
@@ -107,16 +107,22 @@ func (l *library) Update(key string, data interface{}) error {
 // deletes the data located at key
 func (l *library) Delete(key string) error {
 	// if we're dealing with a wildcard...
-	if (strings.LastIndex(key, ".") + 1) == len(key) {
-		for i := range l.libraryData {
-			if len(key) < len(l.libraryData[i].Name) {
-				if key == l.libraryData[i].Name[:len(key)] {
-					delete(l.libraryData, l.libraryData[i].Name)
-				}
-			}
-		}
+	if (strings.LastIndex(key, ".") + 1) == len(key) && len(key) > 1 {
+		keySplit := strings.Split(key, ".")
 
-		return nil
+		if _, err := strconv.Atoi(keySplit[len(keySplit) - 2]); err == nil {
+				for i := range l.libraryData {
+					if len(key) < len(l.libraryData[i].Name) {
+						if key == l.libraryData[i].Name[:len(key)] {
+							delete(l.libraryData, l.libraryData[i].Name)
+						}
+					}
+				}
+
+				return nil
+		} else {
+			return err
+		}
 	}
 
 	delete(l.libraryData, key)
