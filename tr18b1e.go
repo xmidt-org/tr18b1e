@@ -11,8 +11,6 @@
 // TODO: could having the struct exported to the users provide some conditions
 // 			 that we don't want to happen?
 
-// TODO: update README to work like the one in `kratos`
-
 package tr18b1e
 
 import (
