@@ -5,68 +5,68 @@ import (
 	"testing"
 )
 
-func TestNewMock(t *testing.T) {
+func TestNewFake(t *testing.T) {
 	assert := assert.New(t)
 
-	_, err := NewMock()
+	_, err := NewFake()
 
 	assert.Nil(err)
 }
 
-func TestGetMock(t *testing.T) {
+func TestGetFake(t *testing.T) {
 	assert := assert.New(t)
 
-	testMockLib, _ := NewMock()
+	testFakeLib, _ := NewFake()
 
 	// first test determines if it will put the missing data into the library
-	testData, err := testMockLib.GetMock("hello")
+	testData, err := testFakeLib.Get("hello")
 	assert.Equal("hello", testData[0].Value.(string))
 	assert.Nil(err)
 
 	// second test determines if it remains the same between function calls
-	testData, err = testMockLib.GetMock("hello")
+	testData, err = testFakeLib.Get("hello")
 	assert.Equal("hello", testData[0].Value.(string))
 	assert.Nil(err)
 }
 
-func TestPutMock(t *testing.T) {
+func TestPutFake(t *testing.T) {
   assert := assert.New(t)
 
-  testMockLib, _ := NewMock()
+  testFakeLib, _ := NewFake()
 
-  err := testMockLib.PutMock("hello", "world")
+  err := testFakeLib.Put("hello", "world")
   assert.Nil(err)
 
-  testData, _ := testMockLib.GetMock("hello")
+  testData, _ := testFakeLib.Get("hello")
   assert.Equal("world", testData[0].Value.(string))
 }
 
-func TestUpdateMock(t *testing.T) {
+func TestUpdateFake(t *testing.T) {
   assert := assert.New(t)
 
-  testMockLib, _ := NewMock()
+  testFakeLib, _ := NewFake()
 
   // test what happens when the data is not in there at all
-  err := testMockLib.UpdateMock("hello", "world")
+  err := testFakeLib.Update("hello", "world")
   assert.Nil(err)
 
-  testData, _ := testMockLib.GetMock("hello")
+  testData, _ := testFakeLib.Get("hello")
   assert.Equal("world", testData[0].Value.(string))
 
   // test what happens when the data is already in there
-  err = testMockLib.UpdateMock("hello", "goodbye")
+  err = testFakeLib.Update("hello", "goodbye")
   assert.Nil(err)
 
-  testData, _ = testMockLib.GetMock("hello")
+  testData, _ = testFakeLib.Get("hello")
   assert.Equal("goodbye", testData[0].Value.(string))
 }
 
-func TestDeleteMock(t *testing.T) {
+func TestDeleteFake(t *testing.T) {
   assert := assert.New(t)
 
-  testMockLib, _ := NewMock()
+  testFakeLib, _ := NewFake()
 
-  err := testMockLib.PutMock("hello", "world")
-  err = testMockLib.DeleteMock("hello")
+  err := testFakeLib.Put("hello", "world")
+  err = testFakeLib.Delete("hello")
   assert.Nil(err)
 }

@@ -1,26 +1,19 @@
 package tr18b1e
 
-type MockLibrary interface {
-	GetMock(key string) ([]*TRData, error)
-	PutMock(key string, data interface{}) error
-	UpdateMock(key string, data interface{}) error
-	DeleteMock(key string) error
-}
-
-type mockLibrary struct {
+type fakeLibrary struct {
 	lib *library
 }
 
-func NewMock() (MockLibrary, error) {
-	mockLib := &mockLibrary{}
-	mockLib.lib = &library{}
+func NewFake() (Library, error) {
+	fakeLib := &fakeLibrary{}
+	fakeLib.lib = &library{}
 
-	mockLib.lib.libraryData = make(map[string]*TRData)
+	fakeLib.lib.libraryData = make(map[string]*TRData)
 
-	return mockLib, nil
+	return fakeLib, nil
 }
 
-func (m *mockLibrary) GetMock(key string) ([]*TRData, error) {
+func (m *fakeLibrary) Get(key string) ([]*TRData, error) {
 	trValues := make([]*TRData, 0)
 
 	if _, ok := m.lib.libraryData[key]; ok {
@@ -33,11 +26,11 @@ func (m *mockLibrary) GetMock(key string) ([]*TRData, error) {
 	return m.lib.Get(key)
 }
 
-func (m *mockLibrary) PutMock(key string, data interface{}) error {
+func (m *fakeLibrary) Put(key string, data interface{}) error {
 	return m.lib.Put(key, data)
 }
 
-func (m *mockLibrary) UpdateMock(key string, data interface{}) error {
+func (m *fakeLibrary) Update(key string, data interface{}) error {
 	if err := m.lib.Update(key, data); err != nil {
 		return m.lib.Put(key, data)
 	}
@@ -45,6 +38,6 @@ func (m *mockLibrary) UpdateMock(key string, data interface{}) error {
 	return m.lib.Update(key, data)
 }
 
-func (m *mockLibrary) DeleteMock(key string) error {
+func (m *fakeLibrary) Delete(key string) error {
 	return m.lib.Delete(key)
 }

@@ -11,8 +11,6 @@
 // TODO: make the "Get" function return a deep copy
 // TODO: make a populate function
 // TODO: in `Delete` the character before . needs to be number
-// TODO: make the mock tr18b1e renamed to fake and have it implement the
-//  		 same interface as the legit one
 
 package tr18b1e
 

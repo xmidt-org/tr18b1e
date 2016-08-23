@@ -25,14 +25,14 @@ func main() {
 	fmt.Println()
 
 	// testing the mock interface
-	mockLib, _ := tr18b1e.NewMock()
-	mockLib.UpdateMock("hello", "world")
+	fakeLib, _ := tr18b1e.NewFake()
+	fakeLib.Update("hello", "world")
 
-	myData, _ = mockLib.GetMock("hello")
+	myData, _ = fakeLib.Get("hello")
 	fmt.Println(myData[0])
 
-	mockLib.UpdateMock("hello", "goodbye")
-	myData, _ = mockLib.GetMock("hello")
+	fakeLib.Update("hello", "goodbye")
+	myData, _ = fakeLib.Get("hello")
 	fmt.Println(myData[0])
 
 	fmt.Println()
