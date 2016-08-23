@@ -60,3 +60,13 @@ func TestUpdateMock(t *testing.T) {
   testData, _ = testMockLib.GetMock("hello")
   assert.Equal("goodbye", testData[0].Value.(string))
 }
+
+func TestDeleteMock(t *testing.T) {
+  assert := assert.New(t)
+
+  testMockLib, _ := NewMock()
+
+  err := testMockLib.PutMock("hello", "world")
+  err = testMockLib.DeleteMock("hello")
+  assert.Nil(err)
+}

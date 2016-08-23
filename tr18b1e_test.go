@@ -23,8 +23,10 @@ func TestPut(t *testing.T) {
 	newLib, _ := New()
 
 	err := newLib.Put("hello", "world")
+	myData, _ := newLib.Get("hello")
 
 	assert.Nil(err)
+	assert.Equal("world", myData[0].Value.(string))
 }
 
 func TestUpdate(t *testing.T) {
@@ -33,8 +35,10 @@ func TestUpdate(t *testing.T) {
 
 	newLib.Put("hello", "world")
 	err := newLib.Update("hello", 42)
+	myData, _ := newLib.Get("hello")
 
 	assert.Nil(err)
+	assert.Equal(42, myData[0].Value.(int))
 }
 
 func TestGet(t *testing.T) {
@@ -70,11 +74,11 @@ func TestDelete(t *testing.T) {
 	err := newLib.Delete("hello")
 	myData, _ := newLib.Get("hello")
 	assert.Nil(err)
-	assert.Nil(myData)
+	assert.Equal(0, len(myData))
 
 	// test deleting multiple entries with the wild card
 	err = newLib.Delete("hello.")
 	myData, _ = newLib.Get("hello.")
 	assert.Nil(err)
-	assert.Nil(myData)
+	assert.Equal(0, len(myData))
 }
