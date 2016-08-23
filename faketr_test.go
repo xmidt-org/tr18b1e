@@ -30,43 +30,43 @@ func TestGetFake(t *testing.T) {
 }
 
 func TestPutFake(t *testing.T) {
-  assert := assert.New(t)
+	assert := assert.New(t)
 
-  testFakeLib, _ := NewFake()
+	testFakeLib, _ := NewFake()
 
-  err := testFakeLib.Put("hello", "world")
-  assert.Nil(err)
+	err := testFakeLib.Put("hello", "world")
+	assert.Nil(err)
 
-  testData, _ := testFakeLib.Get("hello")
-  assert.Equal("world", testData[0].Value.(string))
+	testData, _ := testFakeLib.Get("hello")
+	assert.Equal("world", testData[0].Value.(string))
 }
 
 func TestUpdateFake(t *testing.T) {
-  assert := assert.New(t)
+	assert := assert.New(t)
 
-  testFakeLib, _ := NewFake()
+	testFakeLib, _ := NewFake()
 
-  // test what happens when the data is not in there at all
-  err := testFakeLib.Update("hello", "world")
-  assert.Nil(err)
+	// test what happens when the data is not in there at all
+	err := testFakeLib.Update("hello", "world")
+	assert.Nil(err)
 
-  testData, _ := testFakeLib.Get("hello")
-  assert.Equal("world", testData[0].Value.(string))
+	testData, _ := testFakeLib.Get("hello")
+	assert.Equal("world", testData[0].Value.(string))
 
-  // test what happens when the data is already in there
-  err = testFakeLib.Update("hello", "goodbye")
-  assert.Nil(err)
+	// test what happens when the data is already in there
+	err = testFakeLib.Update("hello", "goodbye")
+	assert.Nil(err)
 
-  testData, _ = testFakeLib.Get("hello")
-  assert.Equal("goodbye", testData[0].Value.(string))
+	testData, _ = testFakeLib.Get("hello")
+	assert.Equal("goodbye", testData[0].Value.(string))
 }
 
 func TestDeleteFake(t *testing.T) {
-  assert := assert.New(t)
+	assert := assert.New(t)
 
-  testFakeLib, _ := NewFake()
+	testFakeLib, _ := NewFake()
 
-  err := testFakeLib.Put("hello", "world")
-  err = testFakeLib.Delete("hello")
-  assert.Nil(err)
+	err := testFakeLib.Put("hello", "world")
+	err = testFakeLib.Delete("hello")
+	assert.Nil(err)
 }

@@ -87,7 +87,7 @@ func TestDelete(t *testing.T) {
 	assert.Equal(2, len(myData))
 
 	// test deleting multiple entries with the wild card
-	// this should work because we are giving it a number	
+	// this should work because we are giving it a number
 	err = newLib.Delete("101.")
 	myData, _ = newLib.Get("101.")
 	assert.Nil(err)
