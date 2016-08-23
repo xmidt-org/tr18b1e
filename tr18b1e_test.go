@@ -54,8 +54,7 @@ func TestGet(t *testing.T) {
 	// test getting entries with the wild card
 	myData, err = newLib.Get("hello.")
 	assert.Nil(err)
-	assert.Equal("testing", myData[0].Value.(string))
-	assert.Equal("functions", myData[1].Value.(string))
+	assert.Equal(len(myData), 2)
 }
 
 func TestDelete(t *testing.T) {

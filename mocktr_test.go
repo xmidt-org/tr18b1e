@@ -28,3 +28,13 @@ func TestGetMock(t *testing.T) {
 	assert.Equal(testData[0].Value.(string), "hello")
 	assert.Nil(err)
 }
+
+func TestPutMock(t *testing.T) {
+  assert := assert.New(t)
+
+  testMockLib, _ := NewMock()
+
+  err := testMockLib.PutMock("hello", "world")
+
+  assert.Nil(err)
+}
