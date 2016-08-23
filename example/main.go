@@ -6,6 +6,7 @@ import (
 )
 
 func main() {
+	// testing the pure CRUD interface
 	myLibrary, _ := tr18b1e.New()
 
 	myLibrary.Put("hello", "hello")
@@ -21,4 +22,11 @@ func main() {
 	myLibrary.Update("hello", 42)
 	myData, _ = myLibrary.Get("hello")
 	fmt.Println(myData[0])
+	fmt.Println()
+
+	// testing the mock interface
+	mockLib, _ := tr18b1e.NewMock()
+	myData, _ = mockLib.GetMock("helloworld")
+	fmt.Println(myData[0])
+	fmt.Println()
 }

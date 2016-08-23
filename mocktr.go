@@ -21,7 +21,16 @@ func NewMock() (MockLibrary, error) {
 }
 
 func (m *mockLibrary) GetMock(key string) ([]*TRData, error) {
-	return nil, nil
+  trValues := make([]*TRData, 0)
+
+  if _, ok := m.lib.libraryData[key]; ok {
+    trValues = append(trValues, m.lib.libraryData[key])
+    return trValues, nil
+  }
+
+  m.lib.Put(key, key)
+
+  return m.lib.Get(key)
 }
 
 func (m *mockLibrary) PutMock(key string, data interface{}) error {
