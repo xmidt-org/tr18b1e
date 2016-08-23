@@ -21,7 +21,7 @@ import (
 	"strings"
 )
 
-// struct representing the TRData that we want to provide to the user
+// TRData is a struct representing the that we want to provide to the user
 // we store the value type since the value itself is an interface{}
 type TRData struct {
 	Name      string
@@ -29,8 +29,8 @@ type TRData struct {
 	ValueType reflect.Type
 }
 
-// the CRUD interface that we provide to the user, implemented below by
-// the library struct, which uses these functions to adjust its internal map
+// Library is the CRUD interface that we provide to the user, implemented below
+// by the library struct, which uses these functions to adjust its internal map
 type Library interface {
 	Get(key string) ([]*TRData, error)
 	Put(key string, data interface{}) error
@@ -42,8 +42,8 @@ type library struct {
 	libraryData map[string]*TRData
 }
 
-// generate a new instance of a library (and hence, a new map)
-// to be used to make calls to the CRUD interface
+// New is used to generate a new instance of a library (and hence,
+// a new map) to be used to make calls to the CRUD interface
 func New() (Library, error) {
 	newLibrary := &library{}
 
