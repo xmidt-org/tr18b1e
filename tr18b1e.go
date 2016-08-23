@@ -8,7 +8,6 @@
 // create a "fake" version of this that utilizes calls to this to mimic
 // 	intended behavior
 
-// TODO: make the "Get" function return a deep copy
 // TODO: make a populate function
 // TODO: in `Delete` the character before . needs to be number
 
@@ -31,7 +30,7 @@ type TRData struct {
 // Library is the CRUD interface that we provide to the user, implemented below
 // by the library struct, which uses these functions to adjust its internal map
 type Library interface {
-	Get(key string) ([]*TRData, error)
+	Get(key string) ([]TRData, error)
 	Put(key string, data interface{}) error
 	Update(key string, data interface{}) error
 	Delete(key string) error
@@ -52,15 +51,15 @@ func New() (Library, error) {
 }
 
 // get all the data specified by `key`
-func (l *library) Get(key string) ([]*TRData, error) {
-	trValues := make([]*TRData, 0)
+func (l *library) Get(key string) ([]TRData, error) {
+	trValues := make([]TRData, 0)
 
 	// if we're dealing with a wildcard...
 	if (strings.LastIndex(key, ".") + 1) == len(key) {
 		for i := range l.libraryData {
 			if len(key) < len(l.libraryData[i].Name) {
 				if key == l.libraryData[i].Name[:len(key)] {
-					trValues = append(trValues, l.libraryData[i])
+					trValues = append(trValues, *l.libraryData[i])
 				}
 			}
 		}
@@ -74,7 +73,7 @@ func (l *library) Get(key string) ([]*TRData, error) {
 
 	// if we're dealing with a single instance and it exists
 	if _, ok := l.libraryData[key]; ok {
-		trValues = append(trValues, l.libraryData[key])
+		trValues = append(trValues, *l.libraryData[key])
 		return trValues, nil
 	}
 

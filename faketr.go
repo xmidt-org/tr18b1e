@@ -13,11 +13,11 @@ func NewFake() (Library, error) {
 	return fakeLib, nil
 }
 
-func (m *fakeLibrary) Get(key string) ([]*TRData, error) {
-	trValues := make([]*TRData, 0)
+func (m *fakeLibrary) Get(key string) ([]TRData, error) {
+	trValues := make([]TRData, 0)
 
 	if _, ok := m.lib.libraryData[key]; ok {
-		trValues = append(trValues, m.lib.libraryData[key])
+		trValues = append(trValues, *m.lib.libraryData[key])
 		return trValues, nil
 	}
 

@@ -18,10 +18,14 @@ func main() {
 	myData, _ = myLibrary.Get("good.")
 	fmt.Println(myData[0])
 
+	// testing for deep copy
 	myLibrary.Delete("good.")
 	myLibrary.Update("hello", 42)
 	myData, _ = myLibrary.Get("hello")
-	fmt.Println(myData[0])
+	fmt.Println("here", myData[0])
+	myData[0].Value = 64
+	myData, _ = myLibrary.Get("hello")
+	fmt.Println("there", myData[0])
 	fmt.Println()
 
 	// testing the mock interface
