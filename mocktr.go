@@ -34,13 +34,22 @@ func (m *mockLibrary) GetMock(key string) ([]*TRData, error) {
 }
 
 func (m *mockLibrary) PutMock(key string, data interface{}) error {
+  m.lib.Put(key, data)
+
 	return nil
 }
 
 func (m *mockLibrary) UpdateMock(key string, data interface{}) error {
+  if err := m.lib.Update(key, data); err != nil {
+    m.lib.Put(key, data)
+    return nil
+  }
+
 	return nil
 }
 
 func (m *mockLibrary) DeleteMock(key string) error {
+  m.lib.Delete(key)
+  
 	return nil
 }

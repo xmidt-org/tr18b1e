@@ -83,6 +83,7 @@ func (l *library) Get(key string) ([]*TRData, error) {
 
 // Create or replace `data` at the supplied `key`
 func (l *library) Put(key string, data interface{}) error {
+	// going to need to check if the provided key exists within TR-181
 	l.libraryData[key] = &TRData{
 		Name:      key,
 		Value:     data,
