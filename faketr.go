@@ -20,6 +20,11 @@ func NewFake() (Library, error) {
 	return fakeLib, nil
 }
 
+// Populate just makes a call to the Populate implemented by library
+func (m *fakeLibrary) Populate(inData []TRData) error {
+	return m.lib.Populate(inData)
+}
+
 // Get will return an error if given a "wildcard",
 // will return the value if it exists already,
 // and will create the value and return if the value does not yet exist

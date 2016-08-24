@@ -8,7 +8,8 @@
 // create a "fake" version of this that utilizes calls to this to mimic
 // 	intended behavior
 
-// TODO: make a populate function
+// TODO: populate currently appends the data... is that what we want?
+// 			 I made populate part of the interface... is that ok?
 
 package tr18b1e
 
@@ -34,6 +35,7 @@ type Library interface {
 	Put(key string, data interface{}) error
 	Update(key string, data interface{}) error
 	Delete(key string) error
+	Populate(inData []TRData) error
 }
 
 type library struct {
@@ -48,6 +50,18 @@ func New() (Library, error) {
 	newLibrary.libraryData = make(map[string]*TRData)
 
 	return newLibrary, nil
+}
+
+func (l *library) Populate(inData []TRData) error {
+	for i := range inData {
+		l.libraryData[inData[i].Name] = &TRData {
+			Name: inData[i].Name,
+			Value: inData[i].Value,
+			ValueType: inData[i].ValueType,
+		}
+	}
+
+	return nil
 }
 
 // get all the data specified by `key`

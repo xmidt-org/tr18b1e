@@ -2,6 +2,7 @@ package tr18b1e
 
 import (
 	"github.com/stretchr/testify/assert"
+	// "reflect"
 	"testing"
 )
 
@@ -12,6 +13,36 @@ func TestNewFake(t *testing.T) {
 
 	assert.Nil(err)
 }
+
+// func TestPopulateFake(t *testing.T) {
+// 	assert := assert.New(t)
+//
+// 	testFakeLib, _ := NewFake()
+//
+// 	inData := []TRData{
+// 		{
+// 			Name: "hello.world",
+// 			Value: "world",
+// 			ValueType: reflect.TypeOf("world"),
+// 		},
+// 		{
+// 			Name: "hello.42",
+// 			Value: 42,
+// 			ValueType: reflect.TypeOf(42),
+// 		},
+// 		{
+// 			Name: "hello.stuff",
+// 			Value: "stuff",
+// 			ValueType: reflect.TypeOf("stuff"),
+// 		},
+// 	}
+//
+// 	err := testFakeLib.Populate(inData)
+//
+// 	outData, err := testFakeLib.Get("hello.")
+// 	assert.Nil(err)
+// 	assert.Equal(3, len(outData))
+// }
 
 func TestGetFake(t *testing.T) {
 	assert := assert.New(t)
