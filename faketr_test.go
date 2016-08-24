@@ -39,9 +39,14 @@ func TestPopulateFake(t *testing.T) {
 
 	err := testFakeLib.Populate(inData)
 
+	// test if we get what we expect when we call get on data we provided
 	outData, err := testFakeLib.Get("hello.")
 	assert.Nil(err)
 	assert.Equal(3, len(outData))
+
+	// test if we get an error when asking for a wildcard that does not exist
+	outData, err = testFakeLib.Get("broken.")
+	assert.NotNil(err)
 }
 
 func TestGetFake(t *testing.T) {
