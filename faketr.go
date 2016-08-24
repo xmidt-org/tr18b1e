@@ -25,17 +25,17 @@ func (m *fakeLibrary) Populate(inData []TRData) error {
 	return m.lib.Populate(inData)
 }
 
-// Get will return an error if given a "wildcard",
-// will return the value if it exists already,
-// and will create the value and return if the value does not yet exist
+// Get will return an error if given a "wildcard" it has no data for,
+// it will return the value if it exists already,
+// and will create a single value and return a single value if it does not yet exist
 func (m *fakeLibrary) Get(key string) ([]TRData, error) {
-	if (strings.LastIndex(key, ".") + 1) == len(key) {
-		return nil, errors.New("Using a wildcard in the fake tr18b1e.")
-	}
-
 	myData, err := m.lib.Get(key)
 
 	if err != nil || len(myData) == 0 {
+		if (strings.LastIndex(key, ".") + 1) == len(key) {
+			return nil, errors.New("Using a wildcard in the fake tr18b1e w/no data supplied.")
+		}
+
 		m.lib.Put(key, key)
 		return m.lib.Get(key)
 	}
