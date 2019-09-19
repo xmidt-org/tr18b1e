@@ -2,7 +2,8 @@ package main
 
 import (
 	"fmt"
-	"github.com/comcast/tr18b1e"
+
+	"github.com/xmidt-org/tr18b1e"
 )
 
 func main() {
