@@ -3,3 +3,4 @@ example/example
 cover.out
 *.DS_STORE
 
+*vendor/
