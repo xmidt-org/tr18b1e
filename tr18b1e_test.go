@@ -60,6 +60,7 @@ func TestPopulate(t *testing.T) {
 	}
 
 	err := newLib.Populate(inData)
+	assert.Nil(err)
 
 	outData, err := newLib.Get("hello.")
 	assert.Nil(err)

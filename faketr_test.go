@@ -55,6 +55,7 @@ func TestPopulateFake(t *testing.T) {
 	}
 
 	err := testFakeLib.Populate(inData)
+	assert.Nil(err)
 
 	// test if we get what we expect when we call get on data we provided
 	outData, err := testFakeLib.Get("hello.")
@@ -64,6 +65,7 @@ func TestPopulateFake(t *testing.T) {
 	// test if we get an error when asking for a wildcard that does not exist
 	outData, err = testFakeLib.Get("broken.")
 	assert.NotNil(err)
+	assert.Empty(outData)
 }
 
 func TestGetFake(t *testing.T) {
@@ -120,6 +122,7 @@ func TestDeleteFake(t *testing.T) {
 	testFakeLib, _ := NewFake()
 
 	err := testFakeLib.Put("hello", "world")
+	assert.Nil(err)
 	err = testFakeLib.Delete("hello")
 	assert.Nil(err)
 }
