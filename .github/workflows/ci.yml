@@ -24,5 +24,15 @@ jobs:
     with:
       copyright-skip: true
       release-type:   library
+      release-arch-arm64:    true
+      release-arch-amd64:    true
+      release-docker:        true
+      release-docker-latest: true
+      release-docker-major:  true
+      release-docker-minor:  true
+      release-docker-extras: |
+        .release/docker
+        LICENSE
+        NOTICE
       yaml-lint-skip: false
     secrets: inherit
